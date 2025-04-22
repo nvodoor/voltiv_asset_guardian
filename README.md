@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+This was a project crafted on Lovable and also locally. Won the SF Climate Week 2025 Energy Hackathon. 
 
 ## Project info
 
