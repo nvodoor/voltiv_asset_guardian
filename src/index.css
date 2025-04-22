@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 200 25% 98%;
+    --foreground: 222 47% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 10%;
+
+    --primary: 196 85% 22%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 187 93% 44%;
+    --secondary-foreground: 222 47% 10%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 175 100% 40%;
+    --accent-foreground: 222 47% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 196 85% 22%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 196 85% 22%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 187 93% 44%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 187 93% 33%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 187 83% 28%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 196 80% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 196 80% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 196 80% 15%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 187 93% 44%;
+    --primary-foreground: 222 47% 10%;
+
+    --secondary: 196 85% 22%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 175 100% 40%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 40.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 187 93% 44%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.mapboxgl-map {
+  width: 100%;
+  height: 100%;
+}
+
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}
+
+/* Improved Map marker styling */
+.react-map-marker {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  transform: translate(-50%, -50%);
+}
+
+.react-map-marker.risk-low {
+  background-color: theme('colors.risk.low');
+}
+
+.react-map-marker.risk-medium {
+  background-color: theme('colors.risk.medium');
+}
+
+.react-map-marker.risk-high {
+  background-color: theme('colors.risk.high');
+}
+
+.react-map-marker.risk-critical {
+  background-color: theme('colors.risk.critical');
+  animation: pulse-risk 1.5s infinite;
+}
+
+@keyframes pulse-risk {
+  0% {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  50% {
+    width: 24px;
+    height: 24px;
+    margin-left: -2px;
+    margin-top: -2px;
+    box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+  }
+  100% {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+/* Grid capacity indicator ring */
+.has-capacity-indicator {
+  position: relative;
+}
+
+.capacity-ring {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.capacity-ring.constraint-low {
+  border-color: theme('colors.green.500');
+}
+
+.capacity-ring.constraint-medium {
+  border-color: theme('colors.yellow.500');
+}
+
+.capacity-ring.constraint-high {
+  border-color: theme('colors.orange.500');
+  animation: pulse-constraint 2s infinite;
+}
+
+.capacity-ring.constraint-critical {
+  border-color: theme('colors.red.600');
+  animation: pulse-constraint 1.5s infinite;
+}
+
+@keyframes pulse-constraint {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Fix for marker positioning issues */
+.mapboxgl-marker {
+  will-change: transform;
+  z-index: 1;
+}
+
+/* Ensure the marker is positioned correctly */
+.mapboxgl-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: bottom center !important;
+}
+
+/* Custom map markers */
+.house-marker {
+  width: 24px;
+  height: 24px;
+  background-color: #3b82f6;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  z-index: 1;
+}
+
+.house-marker.connected-house {
+  opacity: 0.4;
+}
+
+.house-marker.highlighted-house {
+  background-color: #10b981;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.4);
+  z-index: 10;
+  opacity: 1;
+}
+
+.house-marker:hover {
+  transform: scale(1.1);
+}
+
+.substation-marker {
+  width: 32px;
+  height: 32px;
+  background-color: #ef4444;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, background-color 0.2s;
+  position: absolute;
+}
+
+.substation-marker:hover {
+  transform: scale(1.1);
+}
+
+.substation-marker::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+.mapboxgl-popup {
+  z-index: 100;
+  max-width: 300px;
+}
+
+.mapboxgl-popup-content {
+  padding: 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.mapboxgl-popup-close-button {    border: 0;
+  border-radius: 0 3px 0 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 8px;
+}
+
+.mapboxgl-popup-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
